@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Attendance-Master</string>
     <string name="splash_act">AttendanceMaster</string>
+    <string name="edt_username">Username</string>
+    <string name="edt_password">Passsword</string>
+    <string name="btn_login">Login</string>
 </resources>
