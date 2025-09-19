@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Attendance-Master</string>
+    <string name="splash_act">AttendanceMaster</string>
+</resources>
