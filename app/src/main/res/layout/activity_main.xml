@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="248dp"
         android:text="@string/splash_act"
-        android:textColor="@color/purple_500"
+        android:textColor="@color/jade_green"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,11 +31,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/edt_username_login"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/round_corner"
+        android:backgroundTint="@color/gray"
         android:ems="10"
         android:hint="@string/edt_username"
         android:inputType="textPersonName"
@@ -47,11 +48,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/edt_password_login"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/round_corner"
+        android:backgroundTint="@color/gray"
         android:ems="10"
         android:hint="@string/edt_password"
         android:inputType="textPassword"
@@ -60,17 +62,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_username_login" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_login"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
         android:text="@string/btn_login"
+        android:textSize="20sp"
+        android:textAllCaps="false"
         android:background="@drawable/round_corner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/edt_password_login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
