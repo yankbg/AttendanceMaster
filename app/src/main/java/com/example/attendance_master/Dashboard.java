@@ -3,6 +3,11 @@ package com.example.attendance_master;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.Toast;
+
+import com.example.attendance_master.Util.ApiUtil;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Dashboard extends AppCompatActivity {
     AdminFragment adminFragment;
@@ -15,10 +20,28 @@ public class Dashboard extends AppCompatActivity {
         adminFragment = new AdminFragment();
         workerFragment = new WorkerFragment();
 
-        String role = getIntent().getExtras().getString("checkUser");
-        if("Worker".equals(role)){
+        String username = getIntent().getExtras().getString("checkUser");
+        String password = getIntent().getExtras().getString("password");
+        if("Worker".equals(username)){
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,workerFragment).commit();
-        }else if("Admin".equals(role)){
+        }else if("Admin".equals(username)){
+
+
+            ApiUtil.getuserId(password, username, response -> {
+                        String userId = null;
+                        if ("success".equals(response.optString("status"))) {
+                            userId = ApiUtil.BASE_URL + response.optString("userId");
+                            Bundle arg = new Bundle();
+                            arg.putString("userId", userId);
+                            arg.putString("username", username);
+                            adminFragment.setArguments(arg);
+                        }
+
+                    },
+                    error -> {
+                        Toast.makeText(this, "user ID is not found", Toast.LENGTH_SHORT).show();
+
+                    });
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,adminFragment).commit();
         }
     }

@@ -5,7 +5,7 @@
     <string name="edt_password">Passsword</string>
     <string name="btn_login">Login</string>
     <string name="logOut">Logout</string>
-   <string name="user_p_dashboard">Manage users efficiently by adding, editing, or removing them in the system</string>
+    <string name="user_p_dashboard">Manage users efficiently by adding, editing, or removing them in the system</string>
     <string name="qrcode_p_dashboard">Quickly scan QR codes to register attendance </string>
     <string name="attendance_list_p_dashboard">View and manage the attendance records of all users in the system</string>
     <string name="user_dashboard">User Management</string>

@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
         if(username.equals("Admin")){
             if(password.equals("123456")){
                 Intent intent = new Intent(this,Dashboard.class);
-                intent.putExtra("checkUser","Admin");
+                intent.putExtra("checkUser",username);
+                intent.putExtra("password", password);
                 startActivity(intent);
             }
         }else{
             Intent intent = new Intent(this, Dashboard.class);
-            intent.putExtra("checkUser","Worker");
+            intent.putExtra("checkUser",username);
             startActivity(intent);
         }
     }
