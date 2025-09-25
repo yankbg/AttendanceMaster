@@ -27,22 +27,31 @@ public class Dashboard extends AppCompatActivity {
         }else if("Admin".equals(username)){
 
 
-            ApiUtil.getuserId(password, username, response -> {
+            ApiUtil.getuserId(this,password, username, response -> {
                         String userId = null;
-                        if ("success".equals(response.optString("status"))) {
-                            userId = ApiUtil.BASE_URL + response.optString("userId");
-                            Bundle arg = new Bundle();
-                            arg.putString("userId", userId);
-                            arg.putString("username", username);
-                            adminFragment.setArguments(arg);
+                        try {
+                            if (response != null && "success".equals(response.optString("status"))) {
+                                userId = ApiUtil.BASE_URL + response.optString("userId");
+                                Bundle arg = new Bundle();
+                                arg.putString("userId", userId);
+                                arg.putString("username", username);
+                                adminFragment.setArguments(arg);
+                                getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,adminFragment).commit();
+                            } else {
+                                Toast.makeText(Dashboard.this, "User ID not found or status not success", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(Dashboard.this, "Error processing response", Toast.LENGTH_SHORT).show();
                         }
+
 
                     },
                     error -> {
-                        Toast.makeText(this, "user ID is not found", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Dashboard.this, "user ID is not found", Toast.LENGTH_SHORT).show();
 
                     });
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame_layout,adminFragment).commit();
+
         }
     }
 }

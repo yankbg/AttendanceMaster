@@ -17,7 +17,7 @@ public class ApiUtil {
     public static final String BASE_URL = "http://172.20.10.5/attendance_system/";
     private static final String TAG = "ApiUtil";
 
-    public static void markAttendance(Context context, String username, String time, String date, String qrData,
+    public static void markAttendance(Context context, String username, String userId, String time, String date, String qrData,
                                       Response.Listener<JSONObject> success,
                                       Response.ErrorListener error) {
 
@@ -44,6 +44,7 @@ public class ApiUtil {
                 try {
                     JSONObject jsonBody = new JSONObject();
                     jsonBody.put("username", username);
+                    jsonBody.put("userId", userId);
                     jsonBody.put("time", time);
                     jsonBody.put("date", date);
                     jsonBody.put("qr_data", qrData);
@@ -101,7 +102,7 @@ public class ApiUtil {
             public byte[] getBody() {
                 try {
                     JSONObject jsonBody = new JSONObject();
-                    jsonBody.put("studentId", password);
+                    jsonBody.put("password", password);
                     jsonBody.put("username", username);
 
                     String body = jsonBody.toString();
@@ -127,4 +128,60 @@ public class ApiUtil {
 
         Volley.newRequestQueue(context).add(request);
     }
+    public static void getStudentInfo(Context context, String id, String name,
+                                      Response.Listener<JSONObject> success,
+                                      Response.ErrorListener error) {
+
+        String url = BASE_URL + "check_student";
+
+        StringRequest request = new StringRequest(Request.Method.POST, url,
+                response -> {
+                    Log.d(TAG, "GetStudentInfo Response: " + response);
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        success.onResponse(jsonResponse);
+                    } catch (JSONException e) {
+                        Log.e(TAG, "JSON parsing error: " + e.getMessage());
+                        error.onErrorResponse(new VolleyError("Invalid JSON response: " + response));
+                    }
+                },
+                volleyError -> {
+                    Log.e(TAG, "GetStudentInfo error: " + volleyError.getMessage());
+                    if (volleyError.networkResponse != null) {
+                        Log.e(TAG, "Status code: " + volleyError.networkResponse.statusCode);
+                        Log.e(TAG, "Response data: " + new String(volleyError.networkResponse.data));
+                    }
+                    error.onErrorResponse(volleyError);
+                }) {
+            @Override
+            public byte[] getBody() {
+                try {
+                    JSONObject jsonBody = new JSONObject();
+                    jsonBody.put("studentId", id);
+                    jsonBody.put("fullname", name);
+
+                    String body = jsonBody.toString();
+                    Log.d(TAG, "GetStudentInfo request body: " + body);
+                    return body.getBytes("utf-8");
+                } catch (Exception e) {
+                    Log.e(TAG, "Error creating GetStudentInfo request body: " + e.getMessage());
+                    return null;
+                }
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/json; charset=utf-8";
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                15000,
+                0,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        Volley.newRequestQueue(context).add(request);
+    }
+
 }

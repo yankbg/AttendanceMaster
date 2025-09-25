@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class QRScannerActivity extends AppCompatActivity {
     private static final String TAG = "QRScannerActivity";
-    String username, date, time;
+    String username, date, time, userId;
     //camera permission launcher
     private final ActivityResultLauncher<String> requestPermissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
@@ -52,6 +52,7 @@ public class QRScannerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qrscanner);
 
         username = getIntent().getStringExtra("username");
+        userId = getIntent().getExtras().getString("userId");
         time = getIntent().getExtras().getString("time");
         date = getIntent().getExtras().getString("date");
         // Check camera permission
@@ -108,7 +109,7 @@ public class QRScannerActivity extends AppCompatActivity {
         Toast.makeText(this, "Marking attendance...", Toast.LENGTH_SHORT).show();
 
         // Call your API to mark attendance
-        ApiUtil.markAttendance(this, username, time, date, qrData,
+        ApiUtil.markAttendance(this, username, userId, time, date, qrData,
                 response -> {
                     Log.d(TAG, "Attendance response: " + response.toString());
 
